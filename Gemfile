@@ -20,6 +20,7 @@ gem "importmap-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
+gem 'letter_avatar'
 gem 'bootstrap', '~> 5.2.2'
 gem 'devise'
 gem 'securerandom'

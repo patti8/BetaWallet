@@ -19,5 +19,14 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  after_create :add_stock
+
+  def add_stock
+    stock = Stock.new
+    stock.balance = 25000
+    stock.user_id = self.id
+    stock.save!
+  end
         
 end

@@ -5,16 +5,12 @@
 
 class Transaction < ApplicationRecord
 
+    attr_accessor :stock
 
-    validates_uniqueness_of :id_transaction, on: :create, message: "must be unique"
+    validates_uniqueness_of :id, on: :create, message: "must be unique"
     
     validates_presence_of :source_wallet #, on: :create, message: ""
     validates_presence_of :target_wallet
 
-    private
-
-        # SOURCE WALLET WITH CURRENT USER
-        def source_wallet
-        end
 
 end

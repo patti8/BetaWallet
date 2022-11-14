@@ -2,24 +2,31 @@
     <h1 class="h2">Transfer</h1>   
 </div>
 
+<% if @transfer.errors.any? %>
+    <h2>The following errors prevented the transfer from saving:</h2>
+    <% @transfer.errors.full_messages.each do |msg| %>
+        <%= msg %>
+    <% end %>
+<% end %>
+
 <div class="d-flex align-items-center justify-content-center">
     
     <div class="card card-bg m-2 mt-5">
 
         <div class="card-body">
 
-            <%= form_for @transfer, url: "/transactions/sendMoney" do |f| %>
+            <%= form_with model:  @transfer, url: "/transactions/sendMoney" do |f| %>
                 
                 <div class="mb-3">
                     <%= f.label :target_wallet, class: "form-label" %>
-                    <%= f.text_field :target_wallet, class: "form-control", value: @target_wallet.id, autofocus: true,  :disabled => true %>
+                    <%= f.hidden_field :target_wallet, class: "form-control", autofocus: true, value: @target_wallet.id %>
                     <input type="text" class="form-control" value="<%= @target_wallet.first_name + ' ' + @target_wallet.last_name %>" autofocus="true" disabled>
                 </div>
 
                 <div class="mb-3">
                     <%= f.label :amount, class: "form-label" %>
                     <%= f.number_field :amount, class: "form-control", autofocus: true %>
-                </div>
+                </div>            
 
                 <div class="mb-3">
                     <%= f.submit "Send Money", class: "btn btn-custom1"%>

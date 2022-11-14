@@ -116,6 +116,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    letter_avatar (0.3.9)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -246,6 +247,7 @@ DEPENDENCIES
   devise
   importmap-rails
   jbuilder
+  letter_avatar
   puma (~> 5.0)
   rails (~> 7.0.4)
   redis (~> 4.0)

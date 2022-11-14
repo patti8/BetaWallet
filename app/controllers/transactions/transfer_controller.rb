@@ -2,15 +2,14 @@ class Transactions::TransferController < DashboardController
 
     def friend
 
-        if params[:username].present? 
-            @target_wallet = User.find_by(username: JSON.parse(params[:username]))
+        if params[:search_username].present? 
+
+            @target_wallet = User.where(username: params[:search_username]).where.not(username: current_user.username).first
         end
 
         if @target_wallet.present?
 
-            @target_wallet = User.where(username: JSON.parse(params[:username])).first #.where.not(username: current_user.id)
-
-            @transfer = Transaction::Transfer.new(transfer_params)
+            @transfer = Transaction::Transfer.new
 
         else
             render :json => {data: "tidak ditemukan"}
@@ -19,21 +18,31 @@ class Transactions::TransferController < DashboardController
     end
 
     def sendMoney
-        
+        stock = Stock.find_by(user_id: current_user.id)
         
         @transfer = Transaction::Transfer.new(transfer_params)
-        @transfer.source_wallet = current_user.id
-        @transfer.status = 1
         
-        debugger
+        @transfer.status = 1
+        @transfer.source_wallet = current_user.id
+        @transfer.stock = stock.balance
         
         if @transfer.save
             
-            stock_target = Stock.find_by(user_id: transfer.target_wallet)
+            stock_target = Stock.find_by(user_id: @transfer.target_wallet)
+            stock_source = Stock.find_by(user_id: @transfer.source_wallet)
             
-            if stock_target.update(balance: transfer.amount + stock_target.balance)
-                transfer.update(status: 2)
+            if stock_target.update(balance: @transfer.amount + stock_target.balance)
+                @transfer.update(status: 2)
+                
+                if stock_source.update(balance: stock_source.balance - @transfer.amount)
+                    redirect_to root_path, notice: "Transfer Success", turbo: false
+                end
+
             end
+        else
+            # debugger
+            puts @transfer.errors.full_messages
+            redirect_to transactions_toFriend_path, status: :unprocessable_entity, turbo: false
 
         end
 
@@ -45,7 +54,8 @@ class Transactions::TransferController < DashboardController
         def transfer_params
             params.require(:transaction_transfer).permit(
                 :target_wallet,
-                # :amount
+                :source_wallet,
+                :amount
             )
         end
 
