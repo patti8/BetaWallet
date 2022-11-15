@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Team</h1>   
+</div>
+
+<% if notice.present? %>
+    <div class="alert alert-success" role="alert">
+    <%= notice %>
+    </div>
+<% end %>
+
+
+<div class="row">
+
+    <div class="col">
+        <ul class="list-group list-group-horizontal list-group-flush">
+            <li class="list-group-item">
+                <div class="card bg-primary d-flex align-items-center justify-content-center text-white" style="width: 8rem; height: 8rem;">
+                    <%= link_to new_team_path, class: "nav-link text-center" do %>
+                        <div class="card-body ">
+                            <h5 class="card-title">Add Team</h5>
+                        </div>
+                    <% end %>
+                </div>
+            </li>
+            
+            <% @teams.each do |team| %>
+                <li class="list-group-item">
+                    <div class="card d-flex align-items-center justify-content-center text-primary" style="width: 8rem; height: 8rem;">
+                        <%= link_to team_path(team), class: "nav-link text-center" do %>
+                            <div class="card-body ">
+                                <h5 class="card-title"><%= team.team_name %></h5>
+                            </div>
+                        <% end %>
+                    </div>
+                </li>
+            <% end %>
+
+        </ul>
+        
+    </div>
+    
+</div>

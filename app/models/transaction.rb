@@ -6,10 +6,12 @@
 class Transaction < ApplicationRecord
 
     attr_accessor :stock
+    attribute :status, default: 1
 
     validates_uniqueness_of :id, on: :create, message: "must be unique"
     
-    validates_presence_of :source_wallet #, on: :create, message: ""
+    validates_presence_of :amount
+    validates_presence_of :source_wallet 
     validates_presence_of :target_wallet
 
 

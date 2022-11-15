@@ -2,6 +2,9 @@ class User < ApplicationRecord
 
   has_one :stock, class_name: "stock", foreign_key: "stock_id"
   
+  has_many :teams, foreign_key: "team_owner"
+  has_many :team_member, foreign_key: "user_id"
+
   validates :username, 
             length: {minimum:3, maximum:8, message: "minimum character 3 and max character 8"},
             format: { without: /\s/, message: "must contain no spaces" }
