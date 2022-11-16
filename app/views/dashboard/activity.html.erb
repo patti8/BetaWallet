@@ -2,38 +2,5 @@
     <h1 class="h2">Activity</h1>   
 </div>
 
-<div class="table-responsive">
-    
-    <table class="table table-striped table-sm">
-        
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">ID TRANSACTION</th>
-                <th scope="col">TYPE</th>
-                <th scope="col">AMOUNT</th>
-                <th scope="col">TARGET WALLET</th>
-                <th scope="col">DATE</th>
-            </tr>
-        </thead>
+<%= render "/transactions/transaction", transaction: @transaction %>
 
-        <tbody>
-
-            <% @transaction.each_with_index do |tr, index| %>
-                <tr>
-                    <td><%= index+=1%></td>
-                    <td><%= tr.id %></td>
-                    <td><%= tr.type %></td>
-                    <td><%= tr.amount %></td>
-                    <td><%= tr.target_wallet %></td>
-                    <td><%= tr.created_at %></td>
-                </tr>
-            <% end %>
-            
-        </tbody>
-        
-    </table>
-
-</div>
-
-<%= render "dashboard/welcome" %>

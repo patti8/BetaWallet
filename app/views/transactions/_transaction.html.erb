@@ -24,6 +24,7 @@
                                 <th scope="col">ID TRANSACTION</th>
                                 <th scope="col">TYPE</th>
                                 <th scope="col">AMOUNT</th>
+                                <th scope="col">SOURCE WALLET</th>
                                 <th scope="col">TARGET WALLET</th>
                                 <th scope="col">DATE</th>
                             </tr>
@@ -36,8 +37,24 @@
                                     <td><%= index+=1%></td>
                                     <td><%= tr.id %></td>
                                     <td><%= tr.type %></td>
-                                    <td><%= tr.amount %></td>
-                                    <td><%= tr.target_wallet %></td>
+                                    <td><small><b>Rp.</b></small><%= tr.amount %></td>
+
+                                    <td>
+                                        <small>
+                                            TYPE: <b><%= TransactionHelper.type_description(tr.source_wallet)  %></b>
+                                            <br>
+                                            DESCRIPTION : <b><%= TransactionHelper.user_or_team_description(tr.source_wallet)  %></b>
+                                        </small>
+                                    </td>
+
+                                    <td>
+                                        <small>
+                                            TYPE: <b><%= TransactionHelper.type_description(tr.target_wallet)  %></b>
+                                            <br>
+                                            DESCRIPTION : <b><%= TransactionHelper.user_or_team_description(tr.target_wallet)  %></b>
+                                        </small>
+                                    </td>
+                                    
                                     <td><%= tr.created_at %></td>
                                 </tr>
                             <% end %>

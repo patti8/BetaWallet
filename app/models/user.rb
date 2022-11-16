@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   def add_stock
     stock = Stock.new
-    stock.balance = 25000
+    stock.balance = 15000000
     stock.user_id = self.id
     stock.save!
   end

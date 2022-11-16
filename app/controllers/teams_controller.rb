@@ -14,7 +14,6 @@ class TeamsController < DashboardController
         @team = current_user.teams.build(team_params)
         @team.id = SecureRandom.uuid
         @team.team_owner = current_user.id
-        @team.balance = 0
 
         if @team.save
             redirect_to teams_path, notice: "Successfully added team."
