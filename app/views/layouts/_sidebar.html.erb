@@ -18,18 +18,13 @@
                 Activity
             <% end %>
         </li>
+        
         <li class="nav-item">
             <%= link_to teams_path, class: "nav-link" do %>
                 Team
             <% end %>
         </li>
         
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="users" class="align-text-bottom"></span>
-                Setting
-            </a>
-        </li>
         <li class="nav-item">
             <%= link_to destroy_user_session_path, method: :delete, class: "nav-link" do %>
                 Logout

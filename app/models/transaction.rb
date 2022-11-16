@@ -14,5 +14,6 @@ class Transaction < ApplicationRecord
     validates_presence_of :source_wallet 
     validates_presence_of :target_wallet
 
+    validates_with Transaction::Validator
 
 end

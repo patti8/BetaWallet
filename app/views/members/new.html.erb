@@ -1,19 +1,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Add Team Member</h1>   
+    <h1 class="h2">Add Team Member <h3 class="text-primary">[<%= @team.team_name %>]</h3></h>   
 </div>
-
-<% if notice.present? %>
-    <div class="alert alert-success" role="alert">
-        <%= notice %>
-    </div
-<% end %>
-
-<% if flash[:error].present? %>
-    <div class="alert alert-warning" role="alert">
-    <%= flash[:error] %>
-    </div>
-<% end %>
-
 
 <div class="d-flex align-items-center justify-content-center">
     
@@ -43,6 +30,18 @@
 
 
 <div class="container m-3">
+    <% if notice.present? %>
+        <div class="alert alert-success" role="alert">
+            <%= notice %>
+        </div
+    <% end %>
+
+    <% if flash[:error].present? %>
+        <div class="alert alert-warning" role="alert">
+        <%= flash[:error] %>
+        </div>
+    <% end %>
+
     <% if @user.present? %>
         <div class="row">
             <div class="col">
@@ -68,10 +67,11 @@
                                     <td><%= tr.first_name + " " +tr.last_name %></td>
                                     
                                     <td>
-
-                                        <% if tr.teams.present? %>
-                                            already
                                         
+                                        <% if tr.teams.find_by(id: params[:team_id]).present? %>
+                                            already
+                                        <% elsif Team.find_by(id: params[:team_id]).team_members.find_by(user_id: tr.id) %>
+                                            already
                                         <% else %>
                                         
                                             <%= form_with model: @team_member do |f| %>

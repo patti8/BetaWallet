@@ -9,13 +9,15 @@ Rails.application.routes.draw do
     post "/sendMoney", to: "transfer#sendMoney"
 
     resources :deposit, only: [:create]
-    resources :withdraw, only: [:new, :create]
+    get "history/:id_team", to: "deposit#history", :as => "deposit_history"
+    
+    resources :withdraw, only: [:new, :create, :show]
 
  end
 
 
  resources :teams do 
-    resources :members
+    resources :members, only: [:new, :create]
  end
 
 

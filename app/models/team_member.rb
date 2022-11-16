@@ -2,12 +2,12 @@ class TeamMember < ApplicationRecord
 
   self.primary_key = 'id'
 
-  has_one :user, foreign_key: "id", primary_key: "user_id"
-  # has_one :team, foreign_key: "id", primary_key: "team_id"
-  belongs_to :team, class_name: "team", foreign_key: "team_id"
-  
-  validates :user_id, uniqueness: {scope: :team_id}
+  attribute :status, default: 1
 
+  has_one :user, foreign_key: "id", primary_key: "user_id"
+  belongs_to :team, foreign_key: "team_id"
+
+  validates :user_id, uniqueness: {scope: :team_id}
   validate :validate_team_member
 
   def validate_team_member

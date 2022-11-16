@@ -1,15 +1,12 @@
 class MembersController < DashboardController
 
     before_action :find_team_member_by_id, only: :show
-
-    def index
-        @teams = Team.where(
-            team_owner: current_user.id
-        )
-    end
+    before_action :validation_adding_member
 
     def new
+        @team = Team.find_by(id: params[:team_id])
         @user = User.where("username LIKE '%#{params[:search_username]}%' ")
+
         @team_member = TeamMember.new
     end
 
@@ -20,7 +17,7 @@ class MembersController < DashboardController
         
         respond_to do |format|
             if @team_member.save
-                format.html { redirect_to new_team_member_path, notice: "Successfully added #{user.username} member." }
+                format.html { redirect_to new_team_member_path, notice: "Successfully added #{user.username} to member." }
             else
                 format.html { redirect_to new_team_member_path , status: :unprocessable_entity, flash: {error: @team_member.errors.full_messages} }
             end
@@ -29,26 +26,20 @@ class MembersController < DashboardController
 
     end
 
-    def show
-  
-    end
-
-    def edit
-        
-    end
-
-    def update
-
-    end
-
-    def destroy
-
-    end
-
     private 
 
         def find_team_member_by_id
             @team_member = TeamMember.find(params[:id])
+        end
+
+        def validation_adding_member
+            
+            team = Team.find_by(id: params[:team_id])
+            
+            if team.team_owner != current_user.id
+                redirect_to teams_path, notice: "you don't have access."
+            end
+
         end
 
         def team_member_params

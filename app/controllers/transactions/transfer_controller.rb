@@ -3,13 +3,16 @@ class Transactions::TransferController < DashboardController
     def friend
 
         if params[:search_username].present? 
-
             @target_wallet = User.where(username: params[:search_username]).where.not(username: current_user.username).first
         end
 
         if @target_wallet.present?
 
             @transfer = Transaction::Transfer.new
+            @data_transfer = Transaction::Transfer.where(
+                                source_wallet: current_user.id
+                            ).or(Transaction::Transfer.where(target_wallet: current_user.id))
+                            .order(created_at: :desc)
 
         else
             render :json => {data: "tidak ditemukan"}

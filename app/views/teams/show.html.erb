@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2"><%= @team.team_name %> <%= @team.id %></h1>
+    <h1 class="h2"><%= @team.team_name %></h1>
     <p><%= @team.description %></p> 
 </div>
 
@@ -51,7 +51,11 @@
             <% end %>
             
             <li class="list-group-item">
-                <%= link_to "Withdraw", new_transactions_withdraw_path(:team => @team.id) %>
+                <%= link_to "Withdraw", new_transactions_withdraw_path(:search_team => @team.id) %>
+            </li>
+
+            <li class="list-group-item">
+                <%= link_to "History", transactions_deposit_history_path(@team.id) %>
             </li>
 
         </ul>

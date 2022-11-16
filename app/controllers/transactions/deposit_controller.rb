@@ -1,5 +1,18 @@
 class Transactions::DepositController < DashboardController
 
+    def history
+        
+        if params[:id_team].present?
+            
+            @team = Team.find_by(id: params[:id_team])
+
+            @deposit = Transaction::Deposit.where(
+                target_wallet: params[:id_team]
+            ).order(created_at: :desc)
+
+        end
+    end
+
     def create
         @transaction_deposit = Transaction::Deposit.new(deposit_params)
         
